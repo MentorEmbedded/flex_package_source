@@ -1,0 +1,135 @@
+[package]
+name = "librsvg"
+version = "2.52.10"
+authors = ["Federico Mena Quintero <federico@gnome.org>"]
+build = "build.rs"
+edition = "2018"
+
+[package.metadata.system-deps]
+cairo-pdf = { version = "1.16", optional = true }
+cairo-ps = { version = "1.16", optional = true }
+cairo-svg = { version = "1.16", optional = true }
+gdk-pixbuf = { name = "gdk-pixbuf-2.0", version = "2.20" }
+gio = { name = "gio-2.0", version = "2.24" }
+glib = { name = "glib-2.0", version = "2.50" }
+pangocairo = "1.46"
+
+[package.metadata.system-deps.'cfg(windows)']
+fontconfig = { version = "1.7", optional = true }
+pangoft2 = { version = "1.46", optional = true }
+harfbuzz = { version = "2.0", optional = true }
+freetype2 = { version = "20.0.14", optional = true }
+cairo = { version = "1.16", optional = true }
+cairo-gobject = { version = "1.16", optional = true }
+cairo-png = { version = "1.16", optional = true }
+libxml2 = { name = "libxml-2.0", version = "2.9", optional = true  }
+
+[package.metadata.system-deps.'cfg(not(windows))']
+fontconfig = { version = "1.7" }
+pangoft2 = { version = "1.46" }
+cairo = "1.16"
+cairo-gobject = "1.16"
+cairo-png = "1.16"
+harfbuzz = "2.0"
+freetype2 = "20.0.14"
+libxml2 = { name = "libxml-2.0", version = "2.9" }
+
+[lib]
+name = "librsvg"
+crate-type = [ "staticlib", "rlib" ]
+
+[dependencies]
+# Keep these in sync with respect to the cairo-rs version:
+#   src/lib.rs - toplevel example in the docs
+cairo-rs = { version="0.14.0", features=["v1_16", "png", "pdf", "ps", "svg"] }
+cast = "0.3.0"
+chrono = "0.4.0" # rsvg-convert
+clap = "2.34.0" # rsvg-convert
+cssparser = "0.28.0"
+data-url = "0.1"
+encoding = "0.2.33"
+float-cmp = "0.9.0"
+gdk-pixbuf = "0.14.0"
+gio = { version="0.14.0", features = ["v2_50"] } # per configure.ac
+glib = { version="0.14.0", features = ["v2_50"] }
+itertools = "0.10.3"
+language-tags = "0.3.1"
+libc = "0.2"
+locale_config = "*" # recommended explicitly by locale_config's README.md
+markup5ever = "0.10"
+nalgebra = "0.29.0"
+num-traits = "0.2"
+once_cell = "1.2.0"
+pango = { version="0.14.0", features = ["v1_46"] }
+pangocairo = "0.14.0"
+rayon = "1"
+rctree = "0.4.0"
+regex = "1"
+rgb = { version="0.8", features=["argb"] }
+selectors = "0.23.0"
+string_cache = "0.8.0"
+tinyvec = { version = "1.2.0", features = ["alloc"] }
+url = "2"
+xml5ever = "0.16.1"
+
+[dev-dependencies]
+anyhow = "1.0"
+assert_cmd = "2.0.2"
+cairo-rs = { version="0.14.0", features = ["png"] }
+cast = "0.3.0"
+chrono = "0.4.0"
+criterion = "0.3"
+glib = "0.14.0"
+libc = "0.2"
+lopdf = "0.26.0"
+matches = "0.1"
+pango = "0.14.0"
+pangocairo = "0.14.0"
+png = "0.17.2"
+predicates = "2.0.0"
+proptest = "1.0.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tempfile = "3"
+test-generator = "0.3"
+yeslogic-fontconfig-sys = "2.11.1"
+
+[build-dependencies]
+regex = "1.3.9"
+system-deps = "6.0.0"
+
+[[bench]]
+name = "box_blur"
+harness = false
+
+[[bench]]
+name = "composite"
+harness = false
+
+[[bench]]
+name = "lighting"
+harness = false
+
+[[bench]]
+name = "path_parser"
+harness = false
+
+[[bench]]
+name = "pixbuf_from_surface"
+harness = false
+
+[[bench]]
+name = "pixel_iterators"
+harness = false
+
+[[bench]]
+name = "pixel_ops"
+harness = false
+
+[[bench]]
+name = "srgb"
+harness = false
+
+[[bench]]
+name = "surface_from_pixbuf"
+harness = false
